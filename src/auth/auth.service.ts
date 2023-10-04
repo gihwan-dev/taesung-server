@@ -16,17 +16,16 @@ export class AuthService {
   ) {}
   async create(createAuthDto: CreateAuthDto) {
     const { email, password, name } = createAuthDto;
-    const exsistingUser = this.prisma.user.findUnique({
+    const exsistingUser = await this.prisma.user.findUnique({
       where: { email: email },
     });
     if (exsistingUser) {
       throw new BadRequestException("email already exists");
     }
-    const hashedPassword = await hashPassword(password);
-    const createUser = this.prisma.user.create({
+    const createUser = await this.prisma.user.create({
       data: {
         email,
-        password: hashedPassword,
+        password,
         name,
       },
     });
@@ -49,17 +48,18 @@ export class AuthService {
       throw new BadRequestException("email not found");
     }
 
-    const isPasswordMatch = await comparePassword(password, user.password);
+    const isPasswordMatch = password === user.password;
 
     if (!isPasswordMatch) {
       throw new BadRequestException("password not match");
     }
 
-    const token = this.jwt.signAsync({ id: user.email, name: user.name });
+    const token = await this.jwt.signAsync({ id: user.email, name: user.name });
 
     return {
       message: "login successfully",
       token,
+      user,
     };
   }
 }
