@@ -2,17 +2,16 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma.service";
 
 @Injectable()
-export class SensorService {
+export class WeatherService {
   constructor(private prisma: PrismaService) {}
   async findOne(id: number) {
-    const sensorData = await this.prisma.sensor_data.findFirst({
+    return await this.prisma.weather_data.findFirst({
       where: {
         di_idx: id,
       },
       orderBy: {
-        reg_date: "desc",
+        wd_idx: "desc",
       },
     });
-    return sensorData;
   }
 }

@@ -5,9 +5,11 @@ import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from "./auth/auth.module";
 import { DeviceModule } from './device/device.module';
 import { SensorModule } from './sensor/sensor.module';
+import { CollectModule } from './collect/collect.module';
+import { WeatherModule } from './weather/weather.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, DeviceModule, SensorModule],
+  imports: [ConfigModule.forRoot(), AuthModule, DeviceModule, SensorModule, CollectModule, WeatherModule],
   controllers: [AppController],
   providers: [AppService],
 })

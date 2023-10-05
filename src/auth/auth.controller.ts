@@ -13,7 +13,6 @@ export class AuthController {
 
   @Post("login")
   createToken(@Body() loginUserDto: LoginUserDto) {
-    console.log(loginUserDto);
     return this.authService.createToken(loginUserDto);
   }
 }
