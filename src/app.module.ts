@@ -7,9 +7,11 @@ import { DeviceModule } from './device/device.module';
 import { SensorModule } from './sensor/sensor.module';
 import { CollectModule } from './collect/collect.module';
 import { WeatherModule } from './weather/weather.module';
+import { SettingModule } from './setting/setting.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, DeviceModule, SensorModule, CollectModule, WeatherModule],
+  imports: [ConfigModule.forRoot(), AuthModule, DeviceModule, SensorModule, CollectModule, WeatherModule, SettingModule, NotificationModule],
   controllers: [AppController],
   providers: [AppService],
 })

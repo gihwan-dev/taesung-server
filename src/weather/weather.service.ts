@@ -5,13 +5,15 @@ import { PrismaService } from "src/prisma.service";
 export class WeatherService {
   constructor(private prisma: PrismaService) {}
   async findOne(id: number) {
-    return await this.prisma.weather_data.findFirst({
-      where: {
-        di_idx: id,
-      },
-      orderBy: {
-        wd_idx: "desc",
-      },
-    });
+    return (
+      (await this.prisma.weather_data.findFirst({
+        where: {
+          di_idx: id,
+        },
+        orderBy: {
+          wd_idx: "desc",
+        },
+      })) ?? []
+    );
   }
 }

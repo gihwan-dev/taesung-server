@@ -9,4 +9,9 @@ export class SensorController {
   async findOne(@Param("id") id: string) {
     return await this.sensorService.findOne(+id);
   }
+
+  @Get()
+  async findAll() {
+    return await this.sensorService.findAll();
+  }
 }
