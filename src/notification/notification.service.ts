@@ -5,6 +5,7 @@ import { PrismaService } from "src/prisma.service";
 export class NotificationService {
   constructor(private prisma: PrismaService) {}
   async findAll() {
+    console.log(await this.prisma.alarm_data.findMany());
     return await this.prisma.alarm_data.findMany();
   }
 }
