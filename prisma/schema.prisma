@@ -35,11 +35,15 @@ model alarm_data {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model alarm_setting {
-  as_idx    Int      @id @default(autoincrement())
-  di_idx    Int
-  as_batSet Int
-  as_ouSet  Int
-  mod_date  DateTime @default(now()) @db.DateTime(0)
+  as_idx     Int      @id @default(autoincrement())
+  di_idx     Int
+  as_batSet  Int
+  as_ouSet   Int
+  mod_date   DateTime @default(now()) @db.DateTime(0)
+  as_bat     Int?     @default(1)
+  as_door    Int?     @default(1)
+  as_ou      Int?     @default(1)
+  as_collect Int?     @default(1)
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -76,6 +80,7 @@ model device_state {
   ds_collect       Int      @default(1)
   ds_remoteCollect Int      @default(1)
   mod_date         DateTime @default(now()) @db.DateTime(0)
+  ds_stop          Int?     @default(0)
 }
 
 /// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.

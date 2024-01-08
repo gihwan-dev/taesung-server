@@ -5,7 +5,7 @@ import { PrismaService } from "src/prisma.service";
 export class SensorService {
   constructor(private prisma: PrismaService) {}
   async findOne(id: number) {
-    const sensorData = await this.prisma.sensor_data.findFirst({
+    const sensorData = await this.prisma.sensor_data.findMany({
       where: {
         di_idx: id,
       },

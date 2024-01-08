@@ -7,4 +7,12 @@ export class NotificationService {
   async findAll() {
     return await this.prisma.alarm_data.findMany();
   }
+
+  async findOne(id: number) {
+    return await this.prisma.alarm_data.findMany({
+      where: {
+        di_idx: id,
+      },
+    });
+  }
 }

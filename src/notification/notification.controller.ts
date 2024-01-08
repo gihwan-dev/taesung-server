@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param } from "@nestjs/common";
 import { NotificationService } from "./notification.service";
 
 @Controller("notification")
@@ -8,5 +8,10 @@ export class NotificationController {
   @Get()
   async findAll() {
     return await this.notificationService.findAll();
+  }
+
+  @Get(":id")
+  async findOne(@Param("id") id) {
+    return await this.notificationService.findOne(+id);
   }
 }
