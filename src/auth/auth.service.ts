@@ -2,11 +2,12 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from "@nestjs/common";
 import { CreateAuthDto, LoginUserDto } from "./dto/create-auth.dto";
 import { PrismaService } from "src/prisma.service";
-import { comparePassword, hashPassword } from "./utils";
 import { JwtService } from "@nestjs/jwt";
+import { UpdateAuthDto, UpdateNameDto } from "./dto/update-auth.dto";
 
 @Injectable()
 export class AuthService {
@@ -60,6 +61,28 @@ export class AuthService {
       message: "login successfully",
       token,
       user,
+    };
+  }
+
+  async updateName(updateNameDto: UpdateNameDto) {
+    const { email, name } = updateNameDto;
+
+    const result = await this.prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        name: name,
+      },
+    });
+
+    if (!result) {
+      throw new NotFoundException("해당 유저를 찾지 못했습니다.");
+    }
+
+    return {
+      name: result.name,
+      message: "성공적으로 수정되었습니다.",
     };
   }
 }

@@ -1,5 +1,14 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Query,
+  Search,
+} from "@nestjs/common";
 import { NotificationService } from "./notification.service";
+import { UpdateAlarmDto } from "./dto/update-notification.dto";
 
 @Controller("notification")
 export class NotificationController {
@@ -13,5 +22,15 @@ export class NotificationController {
   @Get(":id")
   async findOne(@Param("id") id) {
     return await this.notificationService.findOne(+id);
+  }
+
+  @Patch(":id")
+  async update(
+    @Param("id") id,
+    @Query("type") search,
+    @Body() updateAlarmDto: UpdateAlarmDto,
+  ) {
+    const value = updateAlarmDto.value;
+    return await this.notificationService.update(+id, search, value);
   }
 }

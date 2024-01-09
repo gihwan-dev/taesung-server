@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { SensorController } from './sensor.controller';
-import { SensorService } from './sensor.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { SensorController } from "./sensor.controller";
+import { SensorService } from "./sensor.service";
 
-describe('SensorController', () => {
+describe("SensorController", () => {
   let controller: SensorController;
 
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('SensorController', () => {
     controller = module.get<SensorController>(SensorController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

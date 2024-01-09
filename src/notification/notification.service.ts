@@ -15,4 +15,47 @@ export class NotificationService {
       },
     });
   }
+
+  async update(id: number, type: string, value: number) {
+    switch (type) {
+      case "collect":
+        return await this.prisma.alarm_setting.update({
+          where: {
+            as_idx: id,
+          },
+          data: {
+            as_collect: value,
+          },
+        });
+      case "door":
+        return await this.prisma.alarm_setting.update({
+          where: {
+            as_idx: id,
+          },
+          data: {
+            as_door: value,
+          },
+        });
+      case "ou":
+        return await this.prisma.alarm_setting.update({
+          where: {
+            as_idx: id,
+          },
+          data: {
+            as_ou: value,
+          },
+        });
+      case "bat":
+        return await this.prisma.alarm_setting.update({
+          where: {
+            as_idx: id,
+          },
+          data: {
+            as_bat: value,
+          },
+        });
+      default:
+        return "잘못된 요청입니다.";
+    }
+  }
 }
