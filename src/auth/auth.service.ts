@@ -85,4 +85,29 @@ export class AuthService {
       message: "성공적으로 수정되었습니다.",
     };
   }
+
+  async createFCMToken(token, ip) {
+    const existingUser = await this.prisma.user_device.findUnique({
+      where: { ip: ip },
+    });
+
+    if (existingUser) {
+      throw new BadRequestException("ip가 이미 존재합니다.");
+    }
+
+    const result = await this.prisma.user_device.create({
+      data: {
+        ip: ip,
+        token: token,
+      },
+    });
+
+    if (!result) {
+      throw new NotFoundException("해당 유저를 찾지 못했습니다.");
+    }
+
+    return {
+      message: "성공적으로 등록되었습니다..",
+    };
+  }
 }

@@ -5,10 +5,11 @@ import {
   Param,
   Patch,
   Query,
-  Search,
+  Req,
 } from "@nestjs/common";
 import { NotificationService } from "./notification.service";
 import { UpdateAlarmDto } from "./dto/update-notification.dto";
+import { Request } from "express";
 
 @Controller("notification")
 export class NotificationController {
@@ -22,6 +23,12 @@ export class NotificationController {
   @Get(":id")
   async findOne(@Param("id") id) {
     return await this.notificationService.findOne(+id);
+  }
+
+  @Get("test/push")
+  async pushNotificationTest(@Req() req: Request) {
+    const ip = req.ip || req.headers["x-forwarded-for"];
+    return await this.notificationService.pushNotificationTest(ip as string);
   }
 
   @Patch(":id")

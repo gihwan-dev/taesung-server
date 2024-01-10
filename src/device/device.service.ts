@@ -51,7 +51,6 @@ export class DeviceService {
   }
 
   async updateBat(id: number, bat: number) {
-    console.log(bat);
     const result = await this.prisma.alarm_setting.update({
       where: {
         as_idx: id,

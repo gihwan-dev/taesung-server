@@ -18,8 +18,6 @@ export class WsGateway {
     @MessageBody() createWDto: CreateWDto,
     @ConnectedSocket() client: Socket,
   ) {
-    console.log("createWDto", createWDto);
-    console.log("client", client);
     client.emit("message", "Hello from server");
     return this.wsService.create(createWDto);
   }
