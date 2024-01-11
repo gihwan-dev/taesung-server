@@ -3,42 +3,53 @@ import {
   SubscribeMessage,
   MessageBody,
   ConnectedSocket,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  WebSocketServer,
 } from "@nestjs/websockets";
 import { WsService } from "./ws.service";
-import { CreateWDto } from "./dto/create-w.dto";
-import { UpdateWDto } from "./dto/update-w.dto";
-import { Socket } from "dgram";
+import { Socket, Server } from "socket.io";
+import {} from "./dto/update-w.dto";
 
 @WebSocketGateway({ cors: { origin: "*" } })
-export class WsGateway {
+export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  @WebSocketServer() server: Server;
+
   constructor(private readonly wsService: WsService) {}
 
-  @SubscribeMessage("createW")
-  create(
-    @MessageBody() createWDto: CreateWDto,
-    @ConnectedSocket() client: Socket,
-  ) {
-    client.emit("message", "Hello from server");
-    return this.wsService.create(createWDto);
+  handleConnection(client: Socket, ...args: any[]) {
+    // 연결 처리
   }
 
-  @SubscribeMessage("findAllWs")
-  findAll() {
-    return this.wsService.findAll();
+  handleDisconnect(client: Socket) {
+    // 연결 해제 처리
   }
 
-  @SubscribeMessage("findOneW")
-  findOne(@MessageBody() id: number) {
-    return this.wsService.findOne(id);
+  //설정
+  @SubscribeMessage("get-device-state")
+  async getDeviceState(@MessageBody() body, @ConnectedSocket() client: Socket) {
+    const id = body;
+    return await this.wsService.getDeviceState(+id, client);
   }
 
-  @SubscribeMessage("updateW")
-  update(@MessageBody() updateWDto: UpdateWDto) {
-    return this.wsService.update(updateWDto.id, updateWDto);
+  @SubscribeMessage("init")
+  async init(@MessageBody() body, @ConnectedSocket() client: Socket) {
+    const id = body;
+    return await this.wsService.init(+id, client);
   }
 
-  @SubscribeMessage("removeW")
-  remove(@MessageBody() id: number) {
-    return this.wsService.remove(id);
+  @SubscribeMessage("set-device-state")
+  async updateDeviceState(@MessageBody() body) {
+    return await this.wsService.updateDeviceState(body, this.server);
+  }
+
+  @SubscribeMessage("set-sensor-data")
+  async createSensorData(@MessageBody() body) {
+    return await this.wsService.createSensorData(body, this.server);
+  }
+
+  @SubscribeMessage("set-weather-data")
+  async createWeatherData(@MessageBody() body) {
+    return await this.wsService.createWeatherData(body, this.server);
   }
 }

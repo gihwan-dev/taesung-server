@@ -25,12 +25,6 @@ export class NotificationController {
     return await this.notificationService.findOne(+id);
   }
 
-  @Get("test/push")
-  async pushNotificationTest(@Req() req: Request) {
-    const ip = req.ip || req.headers["x-forwarded-for"];
-    return await this.notificationService.pushNotificationTest(ip as string);
-  }
-
   @Patch(":id")
   async update(
     @Param("id") id,

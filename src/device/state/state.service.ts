@@ -10,8 +10,8 @@ export class StateService {
     return "This action adds a new state";
   }
 
-  findAll() {
-    return `This action returns all state`;
+  async findAll() {
+    return await this.prisma.device_state.findMany();
   }
 
   findOne(id: number) {
@@ -62,6 +62,7 @@ export class StateService {
         ds_collect: 1,
       },
     });
+
     return result;
   }
 
@@ -74,6 +75,7 @@ export class StateService {
         ds_stop: 0,
       },
     });
+
     return result;
   }
 }

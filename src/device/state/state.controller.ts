@@ -10,6 +10,7 @@ import {
 } from "@nestjs/common";
 import { StateService } from "./state.service";
 import { CreateStateDto } from "./dto/create-state.dto";
+import { Socket } from "dgram";
 
 @Controller("device/state")
 export class StateController {
@@ -20,9 +21,9 @@ export class StateController {
     return this.stateService.create(createStateDto);
   }
 
-  @Get()
-  findAll() {
-    return this.stateService.findAll();
+  @Get("all")
+  async findAll() {
+    return await this.stateService.findAll();
   }
 
   @Get(":id")
@@ -31,7 +32,7 @@ export class StateController {
   }
 
   @Patch(":id")
-  async update(@Param("id") id: string, @Query("type") type) {
+  async update(@Param("id") id: string, @Query("type") type, client: Socket) {
     switch (type) {
       case "start":
         return await this.stateService.startCollect(+id);
