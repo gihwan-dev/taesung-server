@@ -10,6 +10,8 @@ import { WeatherModule } from "./weather/weather.module";
 import { SettingModule } from "./setting/setting.module";
 import { NotificationModule } from "./notification/notification.module";
 import { WsModule } from "./ws/ws.module";
+import { ServeStaticModule } from "@nestjs/serve-static";
+import { join } from "path";
 
 @Module({
   imports: [
@@ -22,6 +24,9 @@ import { WsModule } from "./ws/ws.module";
     SettingModule,
     NotificationModule,
     WsModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, "..", "client"),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

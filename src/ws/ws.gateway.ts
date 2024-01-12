@@ -11,7 +11,7 @@ import { WsService } from "./ws.service";
 import { Socket, Server } from "socket.io";
 import {} from "./dto/update-w.dto";
 
-@WebSocketGateway({ cors: { origin: "*" } })
+@WebSocketGateway({ namespace: "/ws" })
 export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
 
@@ -35,6 +35,8 @@ export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage("init")
   async init(@MessageBody() body, @ConnectedSocket() client: Socket) {
     const id = body;
+
+    console.log("init", id);
     return await this.wsService.init(+id, client);
   }
 
