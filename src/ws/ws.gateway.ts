@@ -11,7 +11,7 @@ import { WsService } from "./ws.service";
 import { Socket, Server } from "socket.io";
 import {} from "./dto/update-w.dto";
 
-@WebSocketGateway({ namespace: "/ws" })
+@WebSocketGateway({ namespace: "/ws", origin: "*" })
 export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
 
