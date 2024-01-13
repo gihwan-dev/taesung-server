@@ -7,7 +7,7 @@ import {
 import { CreateAuthDto, LoginUserDto } from "./dto/create-auth.dto";
 import { PrismaService } from "src/prisma.service";
 import { JwtService } from "@nestjs/jwt";
-import { UpdateAuthDto, UpdateNameDto } from "./dto/update-auth.dto";
+import { UpdateNameDto } from "./dto/update-auth.dto";
 
 @Injectable()
 export class AuthService {
@@ -86,21 +86,9 @@ export class AuthService {
     };
   }
 
-  async createFCMToken(token, ip) {
-    console.log("====================================");
-    console.log(token, ip);
-    console.log("====================================");
-    const existingUser = await this.prisma.user_device.findUnique({
-      where: { ip: ip },
-    });
-
-    if (existingUser) {
-      throw new BadRequestException("ip가 이미 존재합니다.");
-    }
-
+  async createFCMToken(token: string) {
     const result = await this.prisma.user_device.create({
       data: {
-        ip: ip,
         token: token,
       },
     });

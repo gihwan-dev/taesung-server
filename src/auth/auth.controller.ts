@@ -24,7 +24,7 @@ export class AuthController {
   }
 
   @Post("token")
-  async createFCMToken(@Body() body, @Ip() ip: string) {
-    return await this.authService.createFCMToken(body.token, ip);
+  async createFCMToken(@Body() body) {
+    return await this.authService.createFCMToken(body.token);
   }
 }
