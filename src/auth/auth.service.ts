@@ -87,6 +87,9 @@ export class AuthService {
   }
 
   async createFCMToken(token, ip) {
+    console.log("====================================");
+    console.log(token, ip);
+    console.log("====================================");
     const existingUser = await this.prisma.user_device.findUnique({
       where: { ip: ip },
     });
