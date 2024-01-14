@@ -34,6 +34,7 @@ export class StateService {
       data: {
         ds_collect: 2,
         ds_stop: 0,
+        mod_date: new Date(),
       },
     });
 
@@ -60,6 +61,7 @@ export class StateService {
       },
       data: {
         ds_collect: 1,
+        mod_date: new Date(),
       },
     });
 

@@ -10,7 +10,6 @@ import {
 } from "@nestjs/common";
 import { StateService } from "./state.service";
 import { CreateStateDto } from "./dto/create-state.dto";
-import { Socket } from "dgram";
 
 @Controller("device/state")
 export class StateController {
@@ -32,7 +31,7 @@ export class StateController {
   }
 
   @Patch(":id")
-  async update(@Param("id") id: string, @Query("type") type, client: Socket) {
+  async update(@Param("id") id: string, @Query("type") type) {
     switch (type) {
       case "start":
         return await this.stateService.startCollect(+id);
